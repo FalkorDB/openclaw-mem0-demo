@@ -27,5 +27,8 @@ uv.lock
 .DS_Store
 Thumbs.db
 
+# Node.js
+node_modules/
+
 # Docker volumes
 falkordb_data/

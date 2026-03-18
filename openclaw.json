@@ -1,0 +1,36 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "openclaw-mem0": {
+        "enabled": true,
+        "config": {
+          "mode": "open-source",
+          "userId": "alice",
+          "autoRecall": true,
+          "autoCapture": true,
+          "topK": 5,
+          "searchThreshold": 0.3,
+          "oss": {
+            "embedder": {
+              "provider": "openai",
+              "config": {
+                "model": "text-embedding-3-small"
+              }
+            },
+            "llm": {
+              "provider": "openai",
+              "config": {
+                "model": "gpt-4o-mini"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

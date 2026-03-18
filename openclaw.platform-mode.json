@@ -1,0 +1,24 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "openclaw-mem0": {
+        "enabled": true,
+        "config": {
+          "mode": "platform",
+          "apiKey": "${MEM0_API_KEY}",
+          "userId": "alice",
+          "enableGraph": true,
+          "autoRecall": true,
+          "autoCapture": true,
+          "topK": 5,
+          "searchThreshold": 0.3
+        }
+      }
+    }
+  }
+}
