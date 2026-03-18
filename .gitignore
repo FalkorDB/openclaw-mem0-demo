@@ -11,6 +11,9 @@ build/
 venv/
 env/
 
+# uv lock file (optional: remove this line if you want to pin versions)
+uv.lock
+
 # Environment variables
 .env
 

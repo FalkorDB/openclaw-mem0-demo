@@ -26,6 +26,7 @@ Persistent, graph-structured memory for AI agents using [Mem0](https://github.co
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) (for FalkorDB)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (Python package manager)
 - Python 3.10+
 - OpenAI API key
 
@@ -49,9 +50,7 @@ redis-cli -h localhost -p 6379 ping
 ### 2. Install dependencies
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 3. Configure your API key
@@ -66,13 +65,13 @@ cp .env.example .env
 **Quick start** (minimal example):
 
 ```bash
-python demo_basic.py
+uv run python demo_basic.py
 ```
 
 **Full demo** (all features):
 
 ```bash
-python demo.py
+uv run python demo.py
 ```
 
 ## What the Demo Shows
@@ -161,7 +160,7 @@ GRAPH.QUERY mem0_alice "MATCH (a)-[r]->(b) RETURN a.name, type(r), b.name"
 | `ConnectionError` to FalkorDB | Ensure `docker compose up -d` is running and port 6379 is free |
 | `OPENAI_API_KEY` error | Copy `.env.example` to `.env` and add your key |
 | Empty search results | Verify memories were added with `m.get_all(user_id="...")` |
-| Import errors | Ensure you're in the venv: `source .venv/bin/activate` |
+| Import errors | Run with `uv run` or activate the venv: `source .venv/bin/activate` |
 | `register()` not called | Must call `register()` **before** `Memory.from_config()` |
 
 ## Resources
