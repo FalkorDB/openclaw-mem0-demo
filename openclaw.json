@@ -22,6 +22,20 @@
                 "model": "text-embedding-3-small"
               }
             },
+            "vectorStore": {
+              "provider": "memory",
+              "config": {
+                "dimension": 1536
+              }
+            },
+            "graphStore": {
+              "provider": "falkordb",
+              "config": {
+                "host": "localhost",
+                "port": 6379,
+                "graphName": "mem0"
+              }
+            },
             "llm": {
               "provider": "openai",
               "config": {
