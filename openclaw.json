@@ -5,7 +5,7 @@
   "agents": {
     "defaults": {
       "workspace": "~/.openclaw/workspace",
-      "model": "openai/gpt-5.4-mini"
+      "model": "openai/gpt-4o-mini"
     }
   },
   "plugins": {
@@ -20,6 +20,7 @@
           "userId": "alice",
           "autoRecall": true,
           "autoCapture": true,
+          "enableGraph": true,
           "topK": 5,
           "searchThreshold": 0.3,
           "oss": {
