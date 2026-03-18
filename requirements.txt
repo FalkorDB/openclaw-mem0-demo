@@ -1,0 +1,3 @@
+mem0ai>=0.1.0
+mem0-falkordb>=0.1.0
+python-dotenv>=1.0.0
