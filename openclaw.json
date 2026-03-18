@@ -1,10 +1,16 @@
 {
+  "gateway": {
+    "mode": "local"
+  },
   "agents": {
     "defaults": {
       "workspace": "~/.openclaw/workspace"
     }
   },
   "plugins": {
+    "slots": {
+      "memory": "openclaw-mem0"
+    },
     "entries": {
       "openclaw-mem0": {
         "enabled": true,

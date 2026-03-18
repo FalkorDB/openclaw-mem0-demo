@@ -112,17 +112,24 @@ This repo includes two ready-to-use configs:
 
 Fully local — no Mem0 Cloud account needed. Uses OpenAI for embeddings/LLM and FalkorDB for graph storage via [`@falkordb/mem0`](https://github.com/FalkorDB/mem0-falkordb-ts).
 
+Key config points:
+- **`gateway.mode: "local"`** — required for local-only operation
+- **`plugins.slots.memory: "openclaw-mem0"`** — tells OpenClaw to use the mem0 plugin instead of the default `memory-core`
+- **`oss.graphStore`** — configures FalkorDB as the graph backend
+
 ```jsonc
 {
+  "gateway": { "mode": "local" },
   "plugins": {
+    "slots": { "memory": "openclaw-mem0" },
     "entries": {
       "openclaw-mem0": {
         "enabled": true,
         "config": {
           "mode": "open-source",
           "userId": "alice",
-          "autoRecall": true,      // inject memories before each turn
-          "autoCapture": true,     // extract facts after each turn
+          "autoRecall": true,
+          "autoCapture": true,
           "oss": {
             "embedder": { "provider": "openai", "config": { "model": "text-embedding-3-small" } },
             "vectorStore": { "provider": "memory", "config": { "dimension": 1536 } },
