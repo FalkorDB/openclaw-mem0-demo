@@ -4,7 +4,8 @@
   },
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace"
+      "workspace": "~/.openclaw/workspace",
+      "model": "openai/gpt-5.4-mini"
     }
   },
   "plugins": {
