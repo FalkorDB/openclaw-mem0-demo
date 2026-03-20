@@ -61,6 +61,9 @@ redis-cli -h localhost -p 6379 ping
 ```bash
 cp .env.example .env
 # Edit .env and add your OPENAI_API_KEY
+
+# Export it so OpenClaw can use it
+export OPENAI_API_KEY="sk-..."
 ```
 
 ### 3. Install and configure OpenClaw
