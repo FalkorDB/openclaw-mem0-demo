@@ -59,9 +59,10 @@ redis-cli -h localhost -p 6379 ping
 ### 2. Set up environment
 
 ```bash
-cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+export OPENAI_API_KEY="sk-..."
 ```
+
+> **Note:** The Python verification scripts (step 6) also support a `.env` file: `cp .env.example .env` and add your key there.
 
 ### 3. Install and configure OpenClaw
 
@@ -71,6 +72,9 @@ npm install -g openclaw@latest
 
 # Install the FalkorDB-enabled Mem0 memory plugin
 openclaw plugins install @falkordb/openclaw-mem0
+
+# Rebuild native modules (required for better-sqlite3)
+cd ~/.openclaw/extensions/openclaw-mem0 && npm rebuild better-sqlite3 && cd -
 
 # Copy the provided config (OSS mode — fully self-hosted, no Mem0 Cloud needed)
 mkdir -p ~/.openclaw && cp openclaw.json ~/.openclaw/openclaw.json
