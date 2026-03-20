@@ -59,12 +59,10 @@ redis-cli -h localhost -p 6379 ping
 ### 2. Set up environment
 
 ```bash
-cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
-
-# Export it so OpenClaw can use it
 export OPENAI_API_KEY="sk-..."
 ```
+
+> **Note:** The Python verification scripts (step 6) also support a `.env` file: `cp .env.example .env` and add your key there.
 
 ### 3. Install and configure OpenClaw
 
