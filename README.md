@@ -91,10 +91,10 @@ openclaw gateway --port 18789 --verbose
 
 ```bash
 # Send a message — the agent will auto-capture facts
-openclaw agent --message "I'm a software engineer who loves Rust and hiking"
+openclaw agent --local --session-id demo --message "I'm a software engineer who loves Rust and hiking"
 
 # Later, the agent auto-recalls relevant memories
-openclaw agent --message "Recommend me a weekend project"
+openclaw agent --local --session-id demo --message "Recommend me a weekend project"
 # → Agent remembers you like Rust and hiking!
 
 # Use the CLI to search memories directly
