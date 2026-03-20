@@ -73,6 +73,9 @@ npm install -g openclaw@latest
 # Install the FalkorDB-enabled Mem0 memory plugin
 openclaw plugins install @falkordb/openclaw-mem0
 
+# Rebuild native modules (required for better-sqlite3)
+cd ~/.openclaw/extensions/openclaw-mem0 && npm rebuild better-sqlite3 && cd -
+
 # Copy the provided config (OSS mode — fully self-hosted, no Mem0 Cloud needed)
 mkdir -p ~/.openclaw && cp openclaw.json ~/.openclaw/openclaw.json
 ```
