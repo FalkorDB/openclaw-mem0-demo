@@ -69,8 +69,8 @@ cp .env.example .env
 # Install OpenClaw globally
 npm install -g openclaw@latest
 
-# Install the Mem0 memory plugin
-openclaw plugins install @mem0/openclaw-mem0
+# Install the Mem0 memory plugin (from the patched fork)
+openclaw plugins install github:gkorland/mem0#patch-1:openclaw
 
 # Install the FalkorDB graph store for Mem0 (TypeScript)
 npm install -g @falkordb/mem0
