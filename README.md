@@ -22,9 +22,9 @@ Give your [OpenClaw](https://github.com/openclaw/openclaw) assistant persistent,
 | Component | Role |
 |-----------|------|
 | **OpenClaw** | Personal AI assistant — the agent runtime and chat interface |
-| **@mem0/openclaw-mem0** | OpenClaw plugin — auto-recall/capture + 5 memory tools |
+| **@falkordb/openclaw-mem0** | OpenClaw plugin — auto-recall/capture + 5 memory tools, with FalkorDB graph support |
 | **Mem0 Node.js SDK** | Memory management — extracts, stores, and retrieves facts |
-| **@falkordb/mem0** | TypeScript plugin — patches FalkorDB as a graph store into Mem0 |
+| **@falkordb/mem0** | TypeScript library — FalkorDB as a graph store for Mem0 (bundled in the plugin) |
 | **FalkorDB** | Graph database — stores entity relationships per user |
 | **OpenAI** | Embeddings for semantic search + LLM for entity extraction |
 
@@ -69,14 +69,11 @@ cp .env.example .env
 # Install OpenClaw globally
 npm install -g openclaw@latest
 
-# Install the Mem0 memory plugin
-openclaw plugins install @mem0/openclaw-mem0
-
-# Install the FalkorDB graph store for Mem0 (TypeScript)
-npm install -g @falkordb/mem0
+# Install the FalkorDB-enabled Mem0 memory plugin
+openclaw plugins install @falkordb/openclaw-mem0
 
 # Copy the provided config (OSS mode — fully self-hosted, no Mem0 Cloud needed)
-cp openclaw.json ~/.openclaw/openclaw.json
+mkdir -p ~/.openclaw && cp openclaw.json ~/.openclaw/openclaw.json
 ```
 
 ### 4. Start the OpenClaw gateway
@@ -91,10 +88,10 @@ openclaw gateway --port 18789 --verbose
 
 ```bash
 # Send a message — the agent will auto-capture facts
-openclaw agent --message "I'm a software engineer who loves Rust and hiking"
+openclaw agent --local --session-id demo --message "I'm a software engineer who loves Rust and hiking"
 
 # Later, the agent auto-recalls relevant memories
-openclaw agent --message "Recommend me a weekend project"
+openclaw agent --local --session-id demo --message "Recommend me a weekend project"
 # → Agent remembers you like Rust and hiking!
 
 # Use the CLI to search memories directly
@@ -110,7 +107,7 @@ This repo includes two ready-to-use configs:
 
 ### `openclaw.json` — OSS Mode (default, self-hosted)
 
-Fully local — no Mem0 Cloud account needed. Uses OpenAI for embeddings/LLM and FalkorDB for graph storage via [`@falkordb/mem0`](https://github.com/FalkorDB/mem0-falkordb-ts).
+Fully local — no Mem0 Cloud account needed. Uses OpenAI for embeddings/LLM and FalkorDB for graph storage via [`@falkordb/openclaw-mem0`](https://www.npmjs.com/package/@falkordb/openclaw-mem0).
 
 Key config points:
 - **`gateway.mode: "local"`** — required for local-only operation
@@ -168,7 +165,11 @@ Uses Mem0's managed cloud with `enableGraph: true` for built-in graph entity rel
 }
 ```
 
-To use Platform Mode: set `MEM0_API_KEY` in `.env` and copy `openclaw.platform-mode.json` to `~/.openclaw/openclaw.json`.
+To use Platform Mode: set `MEM0_API_KEY` in `.env` and copy `openclaw.platform-mode.json` to `~/.openclaw/openclaw.json`:
+
+```bash
+mkdir -p ~/.openclaw && cp openclaw.platform-mode.json ~/.openclaw/openclaw.json
+```
 
 ### Agent Memory Tools
 
@@ -305,6 +306,7 @@ Sign up at [app.falkordb.cloud](https://app.falkordb.cloud).
 
 - [OpenClaw](https://github.com/openclaw/openclaw) — Personal AI assistant framework
 - [OpenClaw Mem0 Plugin Docs](https://docs.mem0.ai/integrations/openclaw)
+- [@falkordb/openclaw-mem0 (npm)](https://www.npmjs.com/package/@falkordb/openclaw-mem0) — FalkorDB-enabled Mem0 plugin for OpenClaw
 - [@falkordb/mem0 (TypeScript)](https://github.com/FalkorDB/mem0-falkordb-ts) — FalkorDB graph store for Mem0 Node.js
 - [mem0-falkordb (Python)](https://github.com/FalkorDB/mem0-falkordb) — FalkorDB graph store for Mem0 Python
 - [Mem0 Node.js Graph Memory Docs](https://docs.mem0.ai/open-source/features/graph-memory)
