@@ -76,7 +76,7 @@ openclaw plugins install @mem0/openclaw-mem0
 npm install -g @falkordb/mem0
 
 # Copy the provided config (OSS mode — fully self-hosted, no Mem0 Cloud needed)
-cp openclaw.json ~/.openclaw/openclaw.json
+mkdir -p ~/.openclaw && cp openclaw.json ~/.openclaw/openclaw.json
 ```
 
 ### 4. Start the OpenClaw gateway
@@ -168,7 +168,11 @@ Uses Mem0's managed cloud with `enableGraph: true` for built-in graph entity rel
 }
 ```
 
-To use Platform Mode: set `MEM0_API_KEY` in `.env` and copy `openclaw.platform-mode.json` to `~/.openclaw/openclaw.json`.
+To use Platform Mode: set `MEM0_API_KEY` in `.env` and copy `openclaw.platform-mode.json` to `~/.openclaw/openclaw.json`:
+
+```bash
+mkdir -p ~/.openclaw && cp openclaw.platform-mode.json ~/.openclaw/openclaw.json
+```
 
 ### Agent Memory Tools
 
