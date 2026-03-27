@@ -38,6 +38,7 @@ Give your [OpenClaw](https://github.com/openclaw/openclaw) assistant persistent,
 
 - [Node.js ≥ 22](https://nodejs.org/) (for OpenClaw)
 - [Docker](https://docs.docker.com/get-docker/) (for FalkorDB)
+- [Redis CLI](https://redis.io/docs/latest/operate/oss_and_bsd/install/install-redis/) (`redis-cli` — for verifying and inspecting FalkorDB)
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) (for Python verification scripts)
 - OpenAI API key
 
