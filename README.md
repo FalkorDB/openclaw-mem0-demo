@@ -102,6 +102,160 @@ openclaw mem0 search "what languages does the user know"
 openclaw mem0 stats
 ```
 
+## Add Mem0 Memory to an Existing OpenClaw Setup
+
+Already have OpenClaw running? Follow these steps to add persistent graph memory powered by Mem0 and FalkorDB.
+
+### 1. Start FalkorDB
+
+Choose **one** of the following:
+
+#### Option A — Local (Docker)
+
+```bash
+docker run -d --name falkordb -p 6379:6379 -p 3000:3000 falkordb/falkordb:latest
+```
+
+Verify it's running:
+
+```bash
+redis-cli -h localhost -p 6379 ping
+# → PONG
+```
+
+#### Option B — FalkorDB Cloud
+
+1. Sign up at [app.falkordb.cloud](https://app.falkordb.cloud)
+2. Create an instance and note the **host**, **port**, **username**, and **password**
+
+### 2. Install the Mem0 plugin
+
+```bash
+openclaw plugins install @falkordb/openclaw-mem0
+```
+
+Verify it's installed:
+
+```bash
+openclaw plugins list
+# → Should show @falkordb/openclaw-mem0
+```
+
+### 3. Update your OpenClaw config
+
+Open your existing config file (`~/.openclaw/openclaw.json`) and add the mem0 plugin configuration.
+
+Add the following to your config — merge it with any existing settings you already have:
+
+```jsonc
+{
+  // ... your existing config ...
+
+  "plugins": {
+    "slots": {
+      "memory": "openclaw-mem0"    // ← replace default memory-core with mem0
+    },
+    "entries": {
+      "openclaw-mem0": {
+        "enabled": true,
+        "config": {
+          "mode": "open-source",
+          "userId": "alice",         // ← change to your user identifier
+          "autoRecall": true,
+          "autoCapture": true,
+          "oss": {
+            "embedder": {
+              "provider": "openai",
+              "config": { "model": "text-embedding-3-small" }
+            },
+            "vectorStore": {
+              "provider": "memory",
+              "config": { "dimension": 1536 }
+            },
+            "graphStore": {
+              "provider": "falkordb",
+              "config": {
+                // Local Docker:
+                "host": "localhost",
+                "port": 6379,
+                "graphName": "mem0"
+
+                // FalkorDB Cloud — replace the above with:
+                // "host": "your-instance.falkordb.cloud",
+                // "port": 6379,
+                // "username": "default",
+                // "password": "your-password",
+                // "graphName": "mem0"
+              }
+            },
+            "llm": {
+              "provider": "openai",
+              "config": { "model": "gpt-4o-mini" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### 4. Set your OpenAI API key
+
+The mem0 plugin needs an OpenAI key for embeddings and entity extraction. Set it as an environment variable:
+
+```bash
+export OPENAI_API_KEY="sk-your-key-here"
+```
+
+To make it permanent, add it to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) or use a `.env` file in your OpenClaw workspace.
+
+### 5. Restart the OpenClaw gateway
+
+```bash
+# Stop the running gateway, then restart it
+openclaw gateway --port 18789 --verbose
+```
+
+Or if you installed it as a daemon:
+
+```bash
+openclaw onboard --install-daemon
+```
+
+### 6. Chat and verify memory is working
+
+Send a few messages so the agent captures some facts:
+
+```bash
+openclaw agent --local --session-id demo --message "I'm a software engineer who loves Rust and hiking"
+openclaw agent --local --session-id demo --message "Recommend me a weekend project"
+# → Agent should recall your preferences!
+```
+
+### 7. Verify in FalkorDB Browser
+
+FalkorDB includes a built-in browser UI for visualizing your graphs.
+
+1. Open [http://localhost:3000](http://localhost:3000) in your browser (for local Docker), or use the browser at [app.falkordb.cloud](https://app.falkordb.cloud) for cloud instances
+2. Select the graph named `mem0_alice` (or `mem0_<your-userId>`)
+3. Run a query to see stored entities and relationships:
+
+```cypher
+MATCH (a)-[r]->(b) RETURN a, r, b
+```
+
+You should see nodes representing extracted entities (people, technologies, hobbies, etc.) and edges showing their relationships — confirming that Mem0 is capturing and storing memories in FalkorDB.
+
+> **Tip:** You can also verify via the CLI:
+> ```bash
+> redis-cli -h localhost -p 6379
+> GRAPH.LIST
+> GRAPH.QUERY mem0_alice "MATCH (n) RETURN n.name LIMIT 10"
+> ```
+
+---
+
 ## OpenClaw Configuration
 
 This repo includes two ready-to-use configs:
