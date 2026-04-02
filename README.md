@@ -6,7 +6,7 @@ Give your [OpenClaw](https://github.com/openclaw/openclaw) assistant persistent,
 
 ```
 ┌─────────────┐     ┌──────────────────┐     ┌─────────────┐
-│  OpenClaw   │────▶│  @mem0/openclaw  │────▶│  FalkorDB   │
+│  OpenClaw   │────▶│@falkordb/openclaw│────▶│  FalkorDB   │
 │  (Agent)    │     │  -mem0 (Plugin)  │     │  (Graphs)   │
 └─────────────┘     └────────┬─────────┘     └─────────────┘
                              │
@@ -163,6 +163,9 @@ Add the following to your config — merge it with any existing settings you alr
           "userId": "alice",         // ← change to your user identifier
           "autoRecall": true,
           "autoCapture": true,
+          "enableGraph": true,
+          "topK": 5,
+          "searchThreshold": 0.3,
           "oss": {
             "embedder": {
               "provider": "openai",
@@ -282,6 +285,9 @@ Key config points:
           "userId": "alice",
           "autoRecall": true,
           "autoCapture": true,
+          "enableGraph": true,
+          "topK": 5,
+          "searchThreshold": 0.3,
           "oss": {
             "embedder": { "provider": "openai", "config": { "model": "text-embedding-3-small" } },
             "vectorStore": { "provider": "memory", "config": { "dimension": 1536 } },
@@ -405,7 +411,7 @@ GRAPH.QUERY mem0_alice "MATCH (a)-[r]->(b) RETURN a.name, type(r), b.name"
 | `autoCapture` | `boolean` | `true` | Store facts after each turn |
 | `topK` | `number` | `5` | Max memories per recall |
 | `searchThreshold` | `number` | `0.3` | Min similarity (0–1) |
-| `enableGraph` | `boolean` | `false` | Entity graph (**platform mode only**) |
+| `enableGraph` | `boolean` | `false` | Enable entity graph (supported in both OSS and platform modes) |
 | `oss.graphStore.provider` | `string` | — | Graph store provider (e.g., `"falkordb"`) |
 | `oss.graphStore.config` | `object` | — | `host`, `port`, `graphName`, `username`, `password` |
 
